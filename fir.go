@@ -5,13 +5,13 @@ package tsp
 import "math"
 
 type FirFilter struct {
-	buffer       []float64
-	coefficients []float64
+	buffer       []T
+	coefficients []T
 	length       int
 }
 
-func NewFirFilter(coefficients []float64) FirFilter {
-	var new_buffer []float64 = make([]float64, len(coefficients))
+func NewFirFilter(coefficients []T) FirFilter {
+	var new_buffer []T = make([]T, len(coefficients))
 
 	return FirFilter{
 		buffer:       new_buffer,
@@ -40,9 +40,9 @@ func NewFirFilter(coefficients []float64) FirFilter {
 //                                                                  //
 // ---------------------------------------------------------------- //
 
-func (f *FirFilter) Filter(input float64) float64 {
+func (f *FirFilter) Filter(input T) T {
 	n := len(f.coefficients)
-	y := float64(0)
+	y := T(0)
 
 	for i := 1; i < n; i++ {
 		y += (f.buffer[n-i]) * (f.coefficients[n-i])
@@ -54,8 +54,8 @@ func (f *FirFilter) Filter(input float64) float64 {
 	return y
 }
 
-func (f *FirFilter) FilterArray(samples []float64) []float64 {
-	var y []float64 = make([]float64, len(samples))
+func (f *FirFilter) FilterArray(samples []T) []T {
+	var y []T = make([]T, len(samples))
 
 	for i, sample := range samples {
 		y[i] = f.Filter(sample)
@@ -63,11 +63,11 @@ func (f *FirFilter) FilterArray(samples []float64) []float64 {
 	return y
 }
 
-func (f *FirFilter) Coefficients() []float64 {
+func (f *FirFilter) Coefficients() []T {
 	return f.coefficients
 }
 
-func (f *FirFilter) History() []float64 {
+func (f *FirFilter) History() []T {
 	return f.buffer
 }
 
@@ -75,20 +75,20 @@ func (f *FirFilter) Length() int {
 	return f.length
 }
 
-func HanningCoefficients(l int) []float64 {
-	var coefficients []float64 = make([]float64, l)
+func HanningCoefficients(l int) []T {
+	var coefficients []T = make([]T, l)
 
 	for i := 0; i < l; i++ {
-		coefficients[i] = 0.5 * (1 - math.Cos(2.0*math.Pi*float64(i)/(float64(l-1))))
+		coefficients[i] = 0.5 * (1 - math.Cos(2.0*math.Pi*T(i)/(T(l-1))))
 	}
 	return coefficients
 }
 
-func HammingCoefficients(l int) []float64 {
-	var coefficients []float64 = make([]float64, l)
+func HammingCoefficients(l int) []T {
+	var coefficients []T = make([]T, l)
 
 	for i := 0; i < l; i++ {
-		coefficients[i] = 0.54 - 0.46*math.Cos(2.0*math.Pi*float64(i)/float64((l-1)))
+		coefficients[i] = 0.54 - 0.46*math.Cos(2.0*math.Pi*T(i)/T((l-1)))
 	}
 	return coefficients
 }
