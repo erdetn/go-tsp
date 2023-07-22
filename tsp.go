@@ -5,7 +5,7 @@ package tsp
 import "fmt"
 
 func Version() string {
-	return "0.0.1"
+	return "0.1.0"
 }
 
 func Stringify(x []T, name string) string {
