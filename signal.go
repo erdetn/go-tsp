@@ -14,18 +14,18 @@ func NewSignal(t []int, signal_function func(int) T) []T {
 	return y
 }
 
-func Range(args ...int) []T {
+func Range(args ...int) []int {
 	min, max, step := 0, 0, 0
 
 	if len(args) == 0 {
-		return make([]T, 0)[:]
+		return make([]int, 0)[:]
 	}
 
 	if len(args) == 1 {
 		max = args[0]
-		y := make([]T, max)
+		y := make([]int, max)
 		for it := 0; it < max; it++ {
-			y[it] = T(it)
+			y[it] = int(it)
 		}
 		return y[:]
 	}
@@ -38,9 +38,9 @@ func Range(args ...int) []T {
 			max = args[0]
 		}
 		l := max - min
-		y := make([]T, l)
+		y := make([]int, l)
 		for it := 0; it < l; it++ {
-			y[it] = T(min + it)
+			y[it] = int(min + it)
 		}
 
 		return y[:]
@@ -59,15 +59,15 @@ func Range(args ...int) []T {
 			max = args[0]
 		}
 		l := int(max-min) / step
-		y := make([]T, l)
+		y := make([]int, l)
 
 		for it := 0; it < l; it++ {
-			y[it] = T(min + it*step)
+			y[it] = int(min + it*step)
 		}
 		return y[:]
 	}
 
-	return make([]T, 0)[:]
+	return make([]int, 0)[:]
 }
 
 func Operation(x1 []T, x2 []T, op func(T, T) T) []T {
